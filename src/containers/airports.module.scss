@@ -1,0 +1,13 @@
+.main {
+  .sidebar {
+    width: 20%;
+    position: absolute;
+    height: 100%;
+    overflow: auto;
+    border-right: 2px solid #3d3d3d;
+  }
+  .content {
+    margin-left: 20%;
+    padding: 32px;
+  }
+}

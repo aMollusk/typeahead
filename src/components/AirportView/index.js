@@ -1,21 +1,29 @@
 import React, { useState, useEffect } from "react";
+import { useDebounce } from "../../utils";
 
-export default ({ code, endpoint }) => {
+export default ({
+  code,
+  endpoint,
+  onChange,
+  displayAirport: { heading, description }
+}) => {
   const [loading, setLoading] = useState(false);
-  const [{ heading, description }, selectAirport] = useState({
-    heading: "",
-    description: ""
-  });
+  const [timestamp, setTimestamp] = useState(0);
 
   useEffect(() => {
     if (code) {
+      const now = Date.now();
       setLoading(true);
       endpoint(code).then(res => {
-        selectAirport(res);
-        setLoading(false);
+        if (now > timestamp) {
+          onChange(res);
+          setTimestamp(now);
+          setLoading(false);
+        }
       });
     } else {
-      selectAirport({ heading: "", description: "" });
+      onChange({ heading: "", description: "" });
+      setLoading(false);
     }
   }, [code, endpoint]);
 

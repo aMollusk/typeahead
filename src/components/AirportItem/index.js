@@ -3,16 +3,11 @@ import style from "./airportItem.module.scss";
 
 export default ({ country, city, airportCode, countryCode, onClick }) => {
   return (
-    <div
-      className={style.airportItem}
-      onClick={onClick}
-      role="button"
-      tabIndex="0"
-    >
+    <button className={style.airportItem} onClick={onClick}>
       <div>{country}</div>
       <div>{city}</div>
       <div>{countryCode}</div>
       <div>{airportCode}</div>
-    </div>
+    </button>
   );
 };

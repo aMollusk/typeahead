@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useDebounce } from "../../utils";
 
-const Search = ({ endpoint, children }) => {
+const Search = ({ endpoint, onChange }) => {
   const [searchQuery, onSearchQueryChange] = useState("");
-  const [airports, setAirports] = useState([]);
 
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
   useEffect(() => {
     if (debouncedSearchQuery) {
-      endpoint(debouncedSearchQuery).then(setAirports);
+      endpoint(debouncedSearchQuery).then(onChange);
     } else {
-      setAirports([]);
+      onChange([]);
     }
-  }, [debouncedSearchQuery, endpoint]);
+  }, [debouncedSearchQuery, onChange, endpoint]);
 
   return (
     <div>
@@ -22,7 +21,6 @@ const Search = ({ endpoint, children }) => {
         value={searchQuery}
         onChange={e => onSearchQueryChange(e.target.value)}
       />
-      {children(airports)}
     </div>
   );
 };
